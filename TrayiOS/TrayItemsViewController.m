@@ -1,12 +1,5 @@
-//
-//  TrayItemsViewController.m
-//  TrayiOS
-//
-//  Created by hiroshi on 2014/10/04.
-//
-//
-
 #import "TrayItemsViewController.h"
+#import <ReactiveCocoa.h>
 
 @interface TrayItemsViewController ()
 
@@ -16,6 +9,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIBarButtonItem *addButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:nil action:nil];
+    addButtonItem.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        NSLog(@"Add");
+        return [RACSignal empty];
+    }];
+    self.navigationItem.rightBarButtonItem = addButtonItem;
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
