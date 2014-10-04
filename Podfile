@@ -5,6 +5,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 target "TrayiOS" do
   pod 'ReactiveCocoa'
+  pod 'Dropbox-Sync-API-SDK'
 end
 
 target "TrayiOSTests" do
