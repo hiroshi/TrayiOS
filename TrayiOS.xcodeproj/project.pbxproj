@@ -9,11 +9,9 @@
 /* Begin PBXBuildFile section */
 		680FCD7919DF765F00FD3FA9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 680FCD7819DF765F00FD3FA9 /* main.m */; };
 		680FCD7C19DF765F00FD3FA9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 680FCD7B19DF765F00FD3FA9 /* AppDelegate.m */; };
-		680FCD7F19DF765F00FD3FA9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 680FCD7E19DF765F00FD3FA9 /* ViewController.m */; };
-		680FCD8219DF765F00FD3FA9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 680FCD8019DF765F00FD3FA9 /* Main.storyboard */; };
 		680FCD8419DF765F00FD3FA9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 680FCD8319DF765F00FD3FA9 /* Images.xcassets */; };
-		680FCD8719DF765F00FD3FA9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 680FCD8519DF765F00FD3FA9 /* LaunchScreen.xib */; };
 		680FCD9319DF765F00FD3FA9 /* TrayiOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 680FCD9219DF765F00FD3FA9 /* TrayiOSTests.m */; };
+		680FCD9E19DF782D00FD3FA9 /* TrayItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 680FCD9D19DF782D00FD3FA9 /* TrayItemsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,14 +30,12 @@
 		680FCD7819DF765F00FD3FA9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		680FCD7A19DF765F00FD3FA9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		680FCD7B19DF765F00FD3FA9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		680FCD7D19DF765F00FD3FA9 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		680FCD7E19DF765F00FD3FA9 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		680FCD8119DF765F00FD3FA9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		680FCD8319DF765F00FD3FA9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		680FCD8619DF765F00FD3FA9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		680FCD8C19DF765F00FD3FA9 /* TrayiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrayiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		680FCD9119DF765F00FD3FA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		680FCD9219DF765F00FD3FA9 /* TrayiOSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrayiOSTests.m; sourceTree = "<group>"; };
+		680FCD9C19DF782D00FD3FA9 /* TrayItemsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrayItemsViewController.h; sourceTree = "<group>"; };
+		680FCD9D19DF782D00FD3FA9 /* TrayItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrayItemsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,11 +79,9 @@
 			children = (
 				680FCD7A19DF765F00FD3FA9 /* AppDelegate.h */,
 				680FCD7B19DF765F00FD3FA9 /* AppDelegate.m */,
-				680FCD7D19DF765F00FD3FA9 /* ViewController.h */,
-				680FCD7E19DF765F00FD3FA9 /* ViewController.m */,
-				680FCD8019DF765F00FD3FA9 /* Main.storyboard */,
+				680FCD9C19DF782D00FD3FA9 /* TrayItemsViewController.h */,
+				680FCD9D19DF782D00FD3FA9 /* TrayItemsViewController.m */,
 				680FCD8319DF765F00FD3FA9 /* Images.xcassets */,
-				680FCD8519DF765F00FD3FA9 /* LaunchScreen.xib */,
 				680FCD7619DF765F00FD3FA9 /* Supporting Files */,
 			);
 			path = TrayiOS;
@@ -198,8 +192,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				680FCD8219DF765F00FD3FA9 /* Main.storyboard in Resources */,
-				680FCD8719DF765F00FD3FA9 /* LaunchScreen.xib in Resources */,
 				680FCD8419DF765F00FD3FA9 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -218,8 +210,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				680FCD7F19DF765F00FD3FA9 /* ViewController.m in Sources */,
 				680FCD7C19DF765F00FD3FA9 /* AppDelegate.m in Sources */,
+				680FCD9E19DF782D00FD3FA9 /* TrayItemsViewController.m in Sources */,
 				680FCD7919DF765F00FD3FA9 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -241,25 +233,6 @@
 			targetProxy = 680FCD8D19DF765F00FD3FA9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		680FCD8019DF765F00FD3FA9 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				680FCD8119DF765F00FD3FA9 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		680FCD8519DF765F00FD3FA9 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				680FCD8619DF765F00FD3FA9 /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		680FCD9419DF765F00FD3FA9 /* Debug */ = {
