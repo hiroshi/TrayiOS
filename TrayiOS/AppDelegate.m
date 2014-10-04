@@ -1,11 +1,3 @@
-//
-//  AppDelegate.m
-//  TrayiOS
-//
-//  Created by hiroshi on 2014/10/04.
-//
-//
-
 #import "AppDelegate.h"
 #import "TrayItemsViewController.h"
 
