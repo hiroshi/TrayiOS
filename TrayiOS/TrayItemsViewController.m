@@ -1,5 +1,6 @@
 #import "TrayItemsViewController.h"
 #import <ReactiveCocoa.h>
+#import "TrayModel.h"
 
 @interface TrayItemsViewController ()
 
@@ -9,13 +10,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // Add item button
     UIBarButtonItem *addButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:nil action:nil];
     addButtonItem.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
-        NSLog(@"Add");
+        [TrayModel addText:[[NSDate date] description]];
         return [RACSignal empty];
     }];
     self.navigationItem.rightBarButtonItem = addButtonItem;
-    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
