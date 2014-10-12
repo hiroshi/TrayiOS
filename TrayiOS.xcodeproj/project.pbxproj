@@ -14,6 +14,7 @@
 		680FCD9E19DF782D00FD3FA9 /* TrayItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 680FCD9D19DF782D00FD3FA9 /* TrayItemsViewController.m */; };
 		680FCDA119DF8E3200FD3FA9 /* TrayModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 680FCDA019DF8E3200FD3FA9 /* TrayModel.m */; };
 		680FCDA419DF993300FD3FA9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 680FCDA319DF993300FD3FA9 /* Default-568h@2x.png */; };
+		68C6FCC419E8D4EF00BFBF0A /* TrayTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C6FCC319E8D4EF00BFBF0A /* TrayTextViewController.m */; };
 		8DF128573B597E19FF196A92 /* libPods-TrayiOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 11D6389A536A8ACBBC34FB10 /* libPods-TrayiOS.a */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,8 @@
 		680FCDA019DF8E3200FD3FA9 /* TrayModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrayModel.m; sourceTree = "<group>"; };
 		680FCDA219DF8FA500FD3FA9 /* Secrets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Secrets.h; sourceTree = "<group>"; };
 		680FCDA319DF993300FD3FA9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		68C6FCC219E8D4EF00BFBF0A /* TrayTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrayTextViewController.h; sourceTree = "<group>"; };
+		68C6FCC319E8D4EF00BFBF0A /* TrayTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrayTextViewController.m; sourceTree = "<group>"; };
 		EDC93E42F9AF380B4B48E1BA /* Pods-TrayiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrayiOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrayiOS/Pods-TrayiOS.debug.xcconfig"; sourceTree = "<group>"; };
 		EFE9F07D5795D60BFA8BA296 /* Pods-TrayiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrayiOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrayiOS/Pods-TrayiOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -107,6 +110,8 @@
 				680FCDA219DF8FA500FD3FA9 /* Secrets.h */,
 				680FCD9C19DF782D00FD3FA9 /* TrayItemsViewController.h */,
 				680FCD9D19DF782D00FD3FA9 /* TrayItemsViewController.m */,
+				68C6FCC219E8D4EF00BFBF0A /* TrayTextViewController.h */,
+				68C6FCC319E8D4EF00BFBF0A /* TrayTextViewController.m */,
 				680FCD8319DF765F00FD3FA9 /* Images.xcassets */,
 				680FCD7619DF765F00FD3FA9 /* Supporting Files */,
 			);
@@ -284,6 +289,7 @@
 				680FCD9E19DF782D00FD3FA9 /* TrayItemsViewController.m in Sources */,
 				680FCD7919DF765F00FD3FA9 /* main.m in Sources */,
 				680FCDA119DF8E3200FD3FA9 /* TrayModel.m in Sources */,
+				68C6FCC419E8D4EF00BFBF0A /* TrayTextViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

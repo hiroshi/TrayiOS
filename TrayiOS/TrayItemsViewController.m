@@ -1,6 +1,8 @@
 #import "TrayItemsViewController.h"
 #import <ReactiveCocoa.h>
+#import <Dropbox/Dropbox.h>
 #import "TrayModel.h"
+#import "TrayTextViewController.h"
 
 @interface TrayItemsViewController ()
 
@@ -10,13 +12,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     // Add item button
     UIBarButtonItem *addButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:nil action:nil];
     addButtonItem.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
-        [TrayModel addText:[[NSDate date] description]];
+        //[TrayModel addText:[[NSDate date] description]];
+        UIViewController *viewController = [TrayTextViewController new];
+        [self.navigationController pushViewController:viewController animated:YES];
         return [RACSignal empty];
     }];
     self.navigationItem.rightBarButtonItem = addButtonItem;
+    
+    [[TrayModel sharedModel].signal subscribeNext:^(id x) {
+        [self.tableView reloadData];
+    }];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -32,26 +41,21 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return [TrayModel sharedModel].items.count;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    NSDictionary *item = [[TrayModel sharedModel] items][indexPath.row];
+    cell.textLabel.text = item[@"text"];
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.

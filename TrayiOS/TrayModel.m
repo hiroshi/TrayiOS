@@ -1,10 +1,39 @@
 #import "TrayModel.h"
 #import <Dropbox/Dropbox.h>
+#import <ReactiveCocoa.h>
 #import "Secrets.h"
+
+@interface TrayModel ()
+
+@property (nonatomic, strong) DBDatastore *defaultDatastore;
+@property (nonatomic, strong) RACSubject *subject;
+
+@end
+
 
 @implementation TrayModel
 
-+ (void)setupDropbox
++ (TrayModel *)sharedModel
+{
+    static TrayModel *model;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        model = [TrayModel new];
+    });
+    return model;
+}
+
+- (id)init
+{
+    self = [super init];
+    if (!self) {
+        return nil;
+    }
+    self.subject = [RACReplaySubject replaySubjectWithCapacity:1];
+    return self;
+}
+
+- (void)setupDropbox
 {
     // Set up the account manager
     DBAccountManager *accountManager = [[DBAccountManager alloc] initWithAppKey:DROPBOX_APP_KEY secret:DROPBOX_APP_SECRET];
@@ -22,7 +51,7 @@
     }
 }
 
-+ (void)loginFromViewController:(UIViewController *)viewController
+- (void)loginFromViewController:(UIViewController *)viewController
 {
     DBAccount *account = [[DBAccountManager sharedManager] linkedAccount];
     if (account) {
@@ -32,7 +61,7 @@
     }
 }
 
-+ (BOOL)handleOpenURL:(NSURL *)url
+- (BOOL)handleOpenURL:(NSURL *)url
 {
     DBAccount *account = [[DBAccountManager sharedManager] handleOpenURL:url];
     if (account) {
@@ -47,7 +76,7 @@
     return NO;
 }
 
-+ (DBDatastoreManager *)sharedManager
+- (DBDatastoreManager *)sharedManager
 {
     if (![DBDatastoreManager sharedManager]) {
         [self setupDropbox];
@@ -55,19 +84,54 @@
     return [DBDatastoreManager sharedManager];
 }
 
-+ (void)addText:(NSString *)text
+- (void)addText:(NSString *)text
 {
 //    DBDatastore *datastore = [[self sharedManager] openDefaultDatastore:nil];
-    DBError *error = nil;
+    //DBError *error = nil;
     //DBDatastore *datastore = [[self sharedManager] openDatastore:DROPBOX_SHARED_QUEUE_DSID error:&error];
-    DBDatastore *datastore = [[self sharedManager] openDefaultDatastore:&error];
-    if (error) {
-        NSLog(@"openDatastore:%@ error:%@", @"default", error);
-    }
-    DBTable *itemsTable = [datastore getTable:@"items"];
-    DBRecord *itemRecord = [itemsTable insert:@{ @"text": text}];
-    [datastore sync:nil];
+//    DBDatastore *datastore = [[self sharedManager] openDefaultDatastore:&error];
+//    if (error) {
+//        NSLog(@"openDatastore:%@ error:%@", @"default", error);
+//    }
+    DBTable *itemsTable = [self.defaultDatastore getTable:@"items"];
+    /*DBRecord *itemRecord =*/ [itemsTable insert:@{ @"text": text}];
+    [self.defaultDatastore sync:nil];
     NSLog(@"AddText: %@", text);
+    [self.subject sendNext:nil];
+    //self.signal sendNex
+}
+
+- (NSArray *)items
+{
+    DBError *error = nil;
+    DBTable *itemsTable = [self.defaultDatastore getTable:@"items"];
+    NSArray *records = [itemsTable query:nil error:&error];
+    if (error) {
+        NSLog(@"query items failed: %@", error);
+    }
+    return [records.rac_sequence map:^id(DBRecord *record) {
+        return record.fields;
+    }].array;
+}
+
+- (RACSignal *)signal
+{
+    return self.subject;
+}
+
+
+#pragma mark - private
+
+- (DBDatastore *)defaultDatastore
+{
+    if (!_defaultDatastore) {
+        DBError *error = nil;
+        self.defaultDatastore = [[self sharedManager] openDefaultDatastore:&error];
+        if (error) {
+            NSLog(@"openDefaultDatastore failed: %@", error);
+        }
+    }
+    return _defaultDatastore;
 }
 
 @end

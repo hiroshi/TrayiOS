@@ -45,7 +45,7 @@
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url sourceApplication:(NSString *)source annotation:(id)annotation
 {
-    return [TrayModel handleOpenURL:url];
+    return [[TrayModel sharedModel] handleOpenURL:url];
 }
 
 @end
