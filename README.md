@@ -14,3 +14,9 @@ Create your Secrets.h
     #define DROPBOX_APP_SECRET @"<Your Dropbox App Secret"
 
     #endif
+
+Replace the URL scheme with "db-<Your Dropbox App Key>"
+
+else you will get error like following:
+
+    [ERROR] DropboxSDK: unable to link; app isn't registered for correct URL scheme (db-sues46e60vtc5p5)
