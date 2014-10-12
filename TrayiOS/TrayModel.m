@@ -7,6 +7,7 @@
 
 @property (nonatomic, strong) DBDatastore *defaultDatastore;
 @property (nonatomic, strong) RACSubject *subject;
+@property (nonatomic, assign) BOOL linking;
 
 @end
 
@@ -33,34 +34,6 @@
     return self;
 }
 
-- (void)setupDropbox
-{
-    // Set up the account manager
-    DBAccountManager *accountManager = [[DBAccountManager alloc] initWithAppKey:DROPBOX_APP_KEY secret:DROPBOX_APP_SECRET];
-    [DBAccountManager setSharedManager:accountManager];
-    // Set up the datastore manager
-    DBAccount *account = [[DBAccountManager sharedManager] linkedAccount];
-    if (account) {
-        // Use Dropbox datastores
-        [DBDatastoreManager setSharedManager:[DBDatastoreManager managerForAccount:account]];
-    } else {
-        // Use local datastores
-        //[DBDatastoreManager setSharedManager:[DBDatastoreManager localManagerForAccountManager:[DBAccountManager sharedManager]]];
-        UIViewController *viewController = ((UIWindow *)[UIApplication sharedApplication].windows[0]).rootViewController;
-        [self loginFromViewController:viewController];
-    }
-}
-
-- (void)loginFromViewController:(UIViewController *)viewController
-{
-    DBAccount *account = [[DBAccountManager sharedManager] linkedAccount];
-    if (account) {
-        NSLog(@"App already linked");
-    } else {
-        [[DBAccountManager sharedManager] linkFromController:viewController];
-    }
-}
-
 - (BOOL)handleOpenURL:(NSURL *)url
 {
     DBAccount *account = [[DBAccountManager sharedManager] handleOpenURL:url];
@@ -76,23 +49,39 @@
     return NO;
 }
 
-- (DBDatastoreManager *)sharedManager
+- (DBAccountManager *)sharedAccountManager
+{
+    if (![DBAccountManager sharedManager]) {
+        DBAccountManager *accountManager = [[DBAccountManager alloc] initWithAppKey:DROPBOX_APP_KEY secret:DROPBOX_APP_SECRET];
+        [DBAccountManager setSharedManager:accountManager];
+    }
+    return [DBAccountManager sharedManager];
+}
+
+- (DBDatastoreManager *)sharedDatastoreManager
 {
     if (![DBDatastoreManager sharedManager]) {
-        [self setupDropbox];
+        if ([self sharedAccountManager]) {
+            // Set up the datastore manager
+            DBAccount *account = [[DBAccountManager sharedManager] linkedAccount];
+            if (account) {
+                // Use Dropbox datastores
+                [DBDatastoreManager setSharedManager:[DBDatastoreManager managerForAccount:account]];
+            } else if (!self.linking) {
+                self.linking = YES;
+                UIViewController *viewController = ((UIWindow *)[UIApplication sharedApplication].windows[0]).rootViewController;
+                if ([viewController isKindOfClass:[UINavigationController class]]) {
+                    viewController = ((UINavigationController *)viewController).visibleViewController;
+                }
+                [[DBAccountManager sharedManager] linkFromController:viewController];
+            }
+        }
     }
     return [DBDatastoreManager sharedManager];
 }
 
 - (void)addText:(NSString *)text
 {
-//    DBDatastore *datastore = [[self sharedManager] openDefaultDatastore:nil];
-    //DBError *error = nil;
-    //DBDatastore *datastore = [[self sharedManager] openDatastore:DROPBOX_SHARED_QUEUE_DSID error:&error];
-//    DBDatastore *datastore = [[self sharedManager] openDefaultDatastore:&error];
-//    if (error) {
-//        NSLog(@"openDatastore:%@ error:%@", @"default", error);
-//    }
     DBTable *itemsTable = [self.defaultDatastore getTable:@"items"];
     /*DBRecord *itemRecord =*/ [itemsTable insert:@{ @"text": text}];
     [self.defaultDatastore sync:nil];
@@ -126,7 +115,7 @@
 {
     if (!_defaultDatastore) {
         DBError *error = nil;
-        self.defaultDatastore = [[self sharedManager] openDefaultDatastore:&error];
+        self.defaultDatastore = [[self sharedDatastoreManager] openDefaultDatastore:&error];
         if (error) {
             NSLog(@"openDefaultDatastore failed: %@", error);
         }
