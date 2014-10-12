@@ -1,5 +1,5 @@
 PODS:
-  - Dropbox-Sync-API-SDK (3.1.0)
+  - Dropbox-Sync-API-SDK (3.1.1)
   - ReactiveCocoa (2.3.1):
     - ReactiveCocoa/UI
   - ReactiveCocoa/Core (2.3.1):
@@ -13,7 +13,7 @@ DEPENDENCIES:
   - ReactiveCocoa
 
 SPEC CHECKSUMS:
-  Dropbox-Sync-API-SDK: 41f973bd5b29f234fdca91e66066a52c4f98b4ad
+  Dropbox-Sync-API-SDK: 503de85fc9397f2f8e30c70c71ed7707aa9d70c1
   ReactiveCocoa: dca75777b9d18990c8714a3a6f2149f29b4d1462
 
 COCOAPODS: 0.34.1
