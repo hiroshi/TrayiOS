@@ -83,7 +83,8 @@
 - (void)addText:(NSString *)text
 {
     DBTable *itemsTable = [self.defaultDatastore getTable:@"items"];
-    /*DBRecord *itemRecord =*/ [itemsTable insert:@{ @"text": text}];
+    NSDate *now = [NSDate date];
+    /*DBRecord *itemRecord =*/ [itemsTable insert:@{ @"text": text, @"createDate": now, @"orderDate": now}];
     [self.defaultDatastore sync:nil];
     NSLog(@"AddText: %@", text);
     [self.subject sendNext:nil];
@@ -98,9 +99,9 @@
     if (error) {
         NSLog(@"query items failed: %@", error);
     }
-    return [records.rac_sequence map:^id(DBRecord *record) {
+    return [[records.rac_sequence map:^id(DBRecord *record) {
         return record.fields;
-    }].array;
+    }].array sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"orderDate" ascending:NO]]];
 }
 
 - (RACSignal *)signal
