@@ -16,7 +16,7 @@
     // textView
     UITextView *textView = [[UITextView alloc] initWithFrame:self.view.frame];
     textView.font = [UIFont systemFontOfSize:20];
-    textView.text = [[NSDate date] description];
+    //textView.text = [[NSDate date] description];
     [self.view addSubview:textView];
     self.textView = textView;
     // saveButton
