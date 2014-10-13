@@ -120,6 +120,10 @@
         if (error) {
             NSLog(@"openDefaultDatastore failed: %@", error);
         }
+        [self.defaultDatastore sync:&error];
+        if (error) {
+            NSLog(@"defaultDatastore sync failed: %@", error);
+        }
     }
     return _defaultDatastore;
 }
