@@ -39,6 +39,12 @@
     DBAccount *account = [[DBAccountManager sharedManager] handleOpenURL:url];
     if (account) {
         NSLog(@"App linked successfully!");
+#if !TARGET_EXTENSION
+        // Store url for extensions
+        NSUserDefaults *groupDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"com.yakitara.Tray"];
+        [groupDefaults setObject:url.absoluteString forKey:@"dropbox.token.url"];
+        [groupDefaults synchronize];
+#endif
         // Migrate any local datastores to the linked account
         DBDatastoreManager *localManager = [DBDatastoreManager localManagerForAccountManager:[DBAccountManager sharedManager]];
         [localManager migrateToAccount:account error:nil];
@@ -69,11 +75,31 @@
                 [DBDatastoreManager setSharedManager:[DBDatastoreManager managerForAccount:account]];
             } else if (!self.linking) {
                 self.linking = YES;
+#if TARGET_EXTENSION
+                //NSLog(@"No dropbox account link in an extension.");
+                // Store url for extensions
+                NSUserDefaults *groupDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"com.yakitara.Tray"];
+                NSURL *url = [NSURL URLWithString:[groupDefaults objectForKey:@"dropbox.token.url"]];
+                NSLog(@"dropbox.token.url=%@", url);
+                for (NSString *pair in [url.query componentsSeparatedByString:@"&"]) {
+                    NSArray *kv = [pair componentsSeparatedByString:@"="];
+                    if ([kv[0] isEqual:@"state"]) {
+                        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                        [defaults setObject:kv[1] forKey:@"dropbox.sync.nonce"];
+                        [defaults synchronize];
+                        NSLog(@"store nonce: %@", kv[1]);
+                        break;
+                    }
+                }
+                account = [[DBAccountManager sharedManager] handleOpenURL:url];
+                [DBDatastoreManager setSharedManager:[DBDatastoreManager managerForAccount:account]];
+#else
                 UIViewController *viewController = ((UIWindow *)[UIApplication sharedApplication].windows[0]).rootViewController;
                 if ([viewController isKindOfClass:[UINavigationController class]]) {
                     viewController = ((UINavigationController *)viewController).visibleViewController;
                 }
                 [[DBAccountManager sharedManager] linkFromController:viewController];
+#endif
             }
         }
     }
@@ -116,11 +142,11 @@
 {
     if (!_defaultDatastore) {
         DBError *error = nil;
-        self.defaultDatastore = [[self sharedDatastoreManager] openDefaultDatastore:&error];
+        _defaultDatastore = [[self sharedDatastoreManager] openDefaultDatastore:&error];
         if (error) {
             NSLog(@"openDefaultDatastore failed: %@", error);
         }
-        [self.defaultDatastore sync:&error];
+        [_defaultDatastore sync:&error];
         if (error) {
             NSLog(@"defaultDatastore sync failed: %@", error);
         }

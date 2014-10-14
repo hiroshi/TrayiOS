@@ -8,6 +8,11 @@ target "TrayiOS" do
   pod 'Dropbox-Sync-API-SDK'
 end
 
+target "TrayActionExtension" do
+  pod 'ReactiveCocoa'
+  pod 'Dropbox-Sync-API-SDK'
+end
+
 target "TrayiOSTests" do
 
 end
