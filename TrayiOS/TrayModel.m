@@ -41,7 +41,7 @@
         NSLog(@"App linked successfully!");
 #if !TARGET_EXTENSION
         // Store url for extensions
-        NSUserDefaults *groupDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"com.yakitara.Tray"];
+        NSUserDefaults *groupDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.yakitara.Tray"];
         [groupDefaults setObject:url.absoluteString forKey:@"dropbox.token.url"];
         [groupDefaults synchronize];
 #endif
@@ -78,7 +78,7 @@
 #if TARGET_EXTENSION
                 //NSLog(@"No dropbox account link in an extension.");
                 // Store url for extensions
-                NSUserDefaults *groupDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"com.yakitara.Tray"];
+                NSUserDefaults *groupDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.yakitara.Tray"];
                 NSURL *url = [NSURL URLWithString:[groupDefaults objectForKey:@"dropbox.token.url"]];
                 NSLog(@"dropbox.token.url=%@", url);
                 for (NSString *pair in [url.query componentsSeparatedByString:@"&"]) {
