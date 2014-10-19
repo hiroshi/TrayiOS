@@ -1,6 +1,6 @@
 FRAMEWORK_SEARCH_PATHS = "$(PODS_ROOT)/Dropbox-Sync-API-SDK/dropbox-ios-sync-sdk-3.1.1"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/Dropbox-Sync-API-SDK" "${PODS_ROOT}/Headers/Public/ReactiveCocoa" "${PODS_ROOT}/Headers/Public/ReactiveCocoa/ReactiveCocoa"
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/Dropbox-Sync-API-SDK" -isystem "${PODS_ROOT}/Headers/Public/ReactiveCocoa" -isystem "${PODS_ROOT}/Headers/Public/ReactiveCocoa/ReactiveCocoa"
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/Dropbox-Sync-API-SDK" "${PODS_ROOT}/Headers/Public/ReactiveCocoa" "${PODS_ROOT}/Headers/Public/ReactiveCocoa/ReactiveCocoa" "${PODS_ROOT}/Headers/Public/ZeroPush"
+OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/Dropbox-Sync-API-SDK" -isystem "${PODS_ROOT}/Headers/Public/ReactiveCocoa" -isystem "${PODS_ROOT}/Headers/Public/ReactiveCocoa/ReactiveCocoa" -isystem "${PODS_ROOT}/Headers/Public/ZeroPush"
 OTHER_LDFLAGS = -ObjC -l"Pods-TrayActionExtension-Dropbox-Sync-API-SDK" -l"Pods-TrayActionExtension-ReactiveCocoa" -l"c++" -framework "CFNetwork" -framework "Dropbox" -framework "QuartzCore" -framework "Security" -framework "SystemConfiguration"
 PODS_ROOT = ${SRCROOT}/Pods

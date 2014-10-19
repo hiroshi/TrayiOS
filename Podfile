@@ -6,6 +6,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 target "TrayiOS" do
   pod 'ReactiveCocoa'
   pod 'Dropbox-Sync-API-SDK'
+  pod 'ZeroPush'
 end
 
 target "TrayActionExtension" do

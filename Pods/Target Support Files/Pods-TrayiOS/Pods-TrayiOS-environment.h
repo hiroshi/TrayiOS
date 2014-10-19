@@ -36,3 +36,9 @@
 #define COCOAPODS_VERSION_MINOR_ReactiveCocoa_no_arc 3
 #define COCOAPODS_VERSION_PATCH_ReactiveCocoa_no_arc 1
 
+// ZeroPush
+#define COCOAPODS_POD_AVAILABLE_ZeroPush
+#define COCOAPODS_VERSION_MAJOR_ZeroPush 2
+#define COCOAPODS_VERSION_MINOR_ZeroPush 0
+#define COCOAPODS_VERSION_PATCH_ZeroPush 2
+

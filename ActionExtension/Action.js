@@ -1,11 +1,3 @@
-    //
-//  Action.js
-//  ActionExtension
-//
-//  Created by hiroshi on 2014/10/13.
-//
-//
-
 var Action = function() {};
 
 Action.prototype = {
