@@ -66,7 +66,7 @@
 		433A178878116F0036DA7A36 /* libPods-TrayActionExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TrayActionExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		680897D619ED134800F6ADAC /* TrayActionExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TrayActionExtension.entitlements; path = ../TrayActionExtension.entitlements; sourceTree = "<group>"; };
 		680897D719ED135B00F6ADAC /* TrayiOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TrayiOS.entitlements; sourceTree = "<group>"; };
-		680FCD7319DF765F00FD3FA9 /* Tray.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tray.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		680FCD7319DF765F00FD3FA9 /* TrayiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrayiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		680FCD7719DF765F00FD3FA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		680FCD7819DF765F00FD3FA9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		680FCD7A19DF765F00FD3FA9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -147,7 +147,7 @@
 		680FCD7419DF765F00FD3FA9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				680FCD7319DF765F00FD3FA9 /* Tray.app */,
+				680FCD7319DF765F00FD3FA9 /* TrayiOS.app */,
 				680FCD8C19DF765F00FD3FA9 /* TrayiOSTests.xctest */,
 				68E2C7C019EBFFF20028B98A /* TrayActionExtension.appex */,
 			);
@@ -251,7 +251,7 @@
 			);
 			name = TrayiOS;
 			productName = TrayiOS;
-			productReference = 680FCD7319DF765F00FD3FA9 /* Tray.app */;
+			productReference = 680FCD7319DF765F00FD3FA9 /* TrayiOS.app */;
 			productType = "com.apple.product-type.application";
 		};
 		680FCD8B19DF765F00FD3FA9 /* TrayiOSTests */ = {
@@ -567,13 +567,14 @@
 			baseConfigurationReference = EDC93E42F9AF380B4B48E1BA /* Pods-TrayiOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TrayiOS/TrayiOS.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Hiroshi Saito (7CP3DWFH9B)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Hiroshi Saito (7CP3DWFH9B)";
 				INFOPLIST_FILE = TrayiOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "bf13a38b-248f-422d-acb8-519dd73c428b";
 			};
 			name = Debug;
 		};
@@ -582,13 +583,14 @@
 			baseConfigurationReference = EFE9F07D5795D60BFA8BA296 /* Pods-TrayiOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TrayiOS/TrayiOS.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Hiroshi Saito (7CP3DWFH9B)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = TrayiOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "bf13a38b-248f-422d-acb8-519dd73c428b";
 			};
 			name = Release;
 		};
