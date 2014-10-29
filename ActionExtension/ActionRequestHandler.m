@@ -1,10 +1,9 @@
 #import "ActionRequestHandler.h"
 #import <MobileCoreServices/MobileCoreServices.h>
+#import <ReactiveCocoa.h>
 #import "TrayModel.h"
 
 @interface ActionRequestHandler ()
-
-//@property (nonatomic, strong) NSExtensionContext *extensionContext;
 
 @end
 
@@ -12,41 +11,59 @@
 
 - (void)beginRequestWithExtensionContext:(NSExtensionContext *)context {
     // Do not call super in an Action extension with no user interface
-//    self.extensionContext = context;
-    
-//    BOOL found = NO;
-    
-    // Find the item containing the results from the JavaScript preprocessing.
+    NSMutableArray *signals = [[NSMutableArray alloc] initWithCapacity:3];
     for (NSExtensionItem *item in context.inputItems) {
         for (NSItemProvider *itemProvider in item.attachments) {
-//                if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypeURL]) {
-//                    [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypeURL options:nil completionHandler:^(id<NSSecureCoding> item, NSError *error) {
-//                        NSLog(@"item: %@", item);
-//                    }];
-//                }
-            if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypePropertyList]) {
-                [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypePropertyList options:nil completionHandler:^(NSDictionary *dict, NSError *error) {
-                    NSLog(@"dict: %@", dict);
-                    NSDictionary *results = dict[NSExtensionJavaScriptPreprocessingResultsKey];
-                    NSString *text = [NSString stringWithFormat:@"%@\n%@\n\n%@", results[@"title"], results[@"url"], results[@"selectedText"]];
-                    [[TrayModel sharedModel] addText:text];
-//                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-//                        [self itemLoadCompletedWithPreprocessingResults:dictionary[NSExtensionJavaScriptPreprocessingResultsKey]];
-//                    }];
-                }];
-//                found = YES;
+            NSArray *types = @[(NSString *)kUTTypePlainText, (NSString *)kUTTypeURL, (NSString *)kUTTypePropertyList];
+            for (NSString *type in types) {
+                if ([itemProvider hasItemConformingToTypeIdentifier:type]) {
+                    RACReplaySubject *subject = [RACReplaySubject replaySubjectWithCapacity:1];
+                    [signals addObject:subject];
+                    [itemProvider loadItemForTypeIdentifier:type options:nil completionHandler:^(id <NSSecureCoding> item, NSError *error) {
+                        NSLog(@"item: %@", item);
+                        [subject sendNext:item];
+                        [subject sendCompleted];
+                    }];
+                }
             }
-//            break;
         }
-//        if (found) {
-//            break;
-//        }
     }
-    
-//    if (!found) {
-//        // We did not find anything
-//        [self doneWithResults:nil];
-//    }
+    [[RACSignal combineLatest:signals] subscribeNext:^(RACTuple *items) {
+        //NSLog(@"next: %@", items);
+        NSString *title = nil;
+        NSString *urlString = nil;
+        NSString *append = nil;
+        for (id item in items) {
+            if ([item isKindOfClass:[NSString class]]) {
+                title = (NSString *)item;
+            } else if ([item isKindOfClass:[NSURL class]]) {
+                urlString = ((NSURL *)item).absoluteString;
+            } else if ([item isKindOfClass:[NSDictionary class]]) {
+                NSDictionary *dict = ((NSDictionary *)item)[NSExtensionJavaScriptPreprocessingResultsKey];
+                title = dict[@"title"];
+                urlString = dict[@"url"];
+                append = dict[@"selectedText"];
+            }
+        }
+        NSMutableArray *array = [NSMutableArray array];
+        if (title) {
+            [array addObject:title];
+        }
+        if (urlString) {
+            [array addObject:urlString];
+        }
+        if (append) {
+            if (array.count > 0) {
+                [array addObject:@""];
+            }
+            [array addObject:append];
+        }
+        [[TrayModel sharedModel] addText:[array componentsJoinedByString:@"\n"]];
+    } error:^(NSError *error) {
+        NSLog(@"error: %@", error);
+    } completed:^{
+        NSLog(@"complete");
+    }];
 }
 
 //- (void)itemLoadCompletedWithPreprocessingResults:(NSDictionary *)javaScriptPreprocessingResults {
