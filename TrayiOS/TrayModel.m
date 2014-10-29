@@ -173,6 +173,12 @@
         if (error) {
             NSLog(@"defaultDatastore sync failed: %@", error);
         }
+        __weak typeof(self) weakSelf = self;
+        [_defaultDatastore addObserver:self block:^{
+            NSLog(@"observe");
+            [weakSelf.defaultDatastore sync:nil];
+            [weakSelf.subject sendNext:nil];
+        }];
     }
     return _defaultDatastore;
 }
