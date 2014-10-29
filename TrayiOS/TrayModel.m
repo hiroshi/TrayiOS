@@ -3,6 +3,17 @@
 #import <ReactiveCocoa.h>
 #import "Secrets.h"
 
+@implementation DBRecord (keyValue)
+
+- (id)valueForUndefinedKey:(NSString *)key
+{
+    return [self objectForKey:key];
+}
+
+@end
+
+
+
 @interface TrayModel ()
 
 @property (nonatomic, strong) DBDatastore *defaultDatastore;
@@ -130,9 +141,10 @@
     if (error) {
         NSLog(@"query items failed: %@", error);
     }
-    return [[records.rac_sequence map:^id(DBRecord *record) {
-        return record.fields;
-    }].array sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"orderDate" ascending:NO]]];
+    return [records sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"orderDate" ascending:NO]]];
+//    return [[records.rac_sequence map:^id(DBRecord *record) {
+//        return record.fields;
+//    }].array sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"orderDate" ascending:NO]]];
 }
 
 - (void)addDeviceToken:(NSString *)deviceToken

@@ -56,8 +56,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    NSDictionary *item = [[TrayModel sharedModel] items][indexPath.row];
-    cell.textLabel.text = item[@"text"];
+    DBRecord *record = [TrayModel sharedModel].items[indexPath.row];
+    cell.textLabel.text = record[@"text"];
     return cell;
 }
 
