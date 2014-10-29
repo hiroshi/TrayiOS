@@ -181,10 +181,10 @@
         if (error) {
             NSLog(@"openDefaultDatastore failed: %@", error);
         }
-        [_defaultDatastore sync:&error];
-        if (error) {
-            NSLog(@"defaultDatastore sync failed: %@", error);
-        }
+//        [_defaultDatastore sync:&error];
+//        if (error) {
+//            NSLog(@"defaultDatastore sync failed: %@", error);
+//        }
         __weak typeof(self) weakSelf = self;
         [_defaultDatastore addObserver:self block:^{
             NSLog(@"observe");
