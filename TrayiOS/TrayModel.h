@@ -5,11 +5,13 @@
 
 + (TrayModel *)sharedModel;
 - (BOOL)handleOpenURL:(NSURL *)url;
+// Items
 - (void)addText:(NSString *)text;
 - (void)removeItemAtIndex:(NSInteger)index;
+- (NSArray *)items;
+// DeviceTokens
 - (void)addDeviceToken:(NSString *)deviceToken;
 
-@property (readonly) NSArray *items;
 @property (readonly) RACSignal *signal;
 
 @end

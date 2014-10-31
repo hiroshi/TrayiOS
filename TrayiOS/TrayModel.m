@@ -148,9 +148,6 @@
         NSLog(@"query items failed: %@", error);
     }
     return [records sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"orderDate" ascending:NO]]];
-//    return [[records.rac_sequence map:^id(DBRecord *record) {
-//        return record.fields;
-//    }].array sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"orderDate" ascending:NO]]];
 }
 
 - (void)addDeviceToken:(NSString *)deviceToken
