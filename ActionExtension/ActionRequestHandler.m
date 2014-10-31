@@ -28,6 +28,7 @@
             }
         }
     }
+    // Gather items and process them
     [[RACSignal combineLatest:signals] subscribeNext:^(RACTuple *items) {
         //NSLog(@"next: %@", items);
         NSString *title = nil;
@@ -46,13 +47,13 @@
             }
         }
         NSMutableArray *array = [NSMutableArray array];
-        if (title) {
+        if (title && title.length > 0) {
             [array addObject:title];
         }
-        if (urlString) {
+        if (urlString && urlString.length > 0) {
             [array addObject:urlString];
         }
-        if (append) {
+        if (append && urlString.length > 0) {
             if (array.count > 0) {
                 [array addObject:@""];
             }
