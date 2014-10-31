@@ -6,6 +6,7 @@
 + (TrayModel *)sharedModel;
 - (BOOL)handleOpenURL:(NSURL *)url;
 - (void)addText:(NSString *)text;
+- (void)removeItemAtIndex:(NSInteger)index;
 - (void)addDeviceToken:(NSString *)deviceToken;
 
 @property (readonly) NSArray *items;

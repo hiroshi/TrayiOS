@@ -130,7 +130,13 @@
     [self.defaultDatastore sync:nil];
     NSLog(@"AddText: %@", text);
     [self.subject sendNext:nil];
-    //self.signal sendNex
+}
+
+- (void)removeItemAtIndex:(NSInteger)index
+{
+    DBRecord *record = self.items[index];
+    [record deleteRecord];
+    [self.defaultDatastore sync:nil];
 }
 
 - (NSArray *)items
@@ -188,8 +194,11 @@
         __weak typeof(self) weakSelf = self;
         [_defaultDatastore addObserver:self block:^{
             NSLog(@"observe");
-            [weakSelf.defaultDatastore sync:nil];
-            [weakSelf.subject sendNext:nil];
+            // This condition prevent canceling UITableViewCell delete animation by reloadData
+            if (weakSelf.defaultDatastore.status.incoming) {
+                [weakSelf.defaultDatastore sync:nil];
+                [weakSelf.subject sendNext:nil];
+            }
         }];
     }
     return _defaultDatastore;
