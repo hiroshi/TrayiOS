@@ -126,7 +126,12 @@
 {
     DBTable *itemsTable = [self.defaultDatastore getTable:@"items"];
     NSDate *now = [NSDate date];
-    /*DBRecord *itemRecord =*/ [itemsTable insert:@{ @"text": text, @"createDate": now, @"orderDate": now}];
+    /*DBRecord *itemRecord =*/ [itemsTable insert:@{
+        @"text": text,
+        @"archived": @NO,
+        @"createDate": now,
+        @"orderDate": now
+    }];
     [self.defaultDatastore sync:nil];
     NSLog(@"AddText: %@", text);
     [self.subject sendNext:nil];
@@ -135,7 +140,7 @@
 - (void)removeItemAtIndex:(NSInteger)index
 {
     DBRecord *record = self.items[index];
-    [record deleteRecord];
+    [record update:@{@"archived": @YES}];
     [self.defaultDatastore sync:nil];
 }
 
@@ -143,7 +148,7 @@
 {
     DBTable *itemsTable = [self.defaultDatastore getTable:@"items"];
     DBError *error = nil;
-    NSArray *records = [itemsTable query:nil error:&error];
+    NSArray *records = [itemsTable query:@{@"archived": @NO} error:&error];
     if (error) {
         NSLog(@"query items failed: %@", error);
     }
