@@ -7,6 +7,7 @@ target "TrayiOS" do
   pod 'ReactiveCocoa'
   pod 'Dropbox-Sync-API-SDK'
   pod 'ZeroPush'
+  pod 'TUSafariActivity'
 end
 
 target "TrayActionExtension" do

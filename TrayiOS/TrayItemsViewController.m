@@ -1,6 +1,7 @@
 #import "TrayItemsViewController.h"
 #import <ReactiveCocoa.h>
 #import <Dropbox/Dropbox.h>
+#import <TUSafariActivity.h>
 #import "TrayModel.h"
 #import "TrayTextViewController.h"
 
@@ -58,7 +59,33 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     DBRecord *record = [TrayModel sharedModel].items[indexPath.row];
-    cell.textLabel.text = record[@"text"];
+    NSString *text = record[@"text"];
+    cell.textLabel.text = text;
+    // Remove old gestureRecognizers from the possible reused cell.
+    for (UIGestureRecognizer *gesture in cell.gestureRecognizers) {
+        [cell removeGestureRecognizer:gesture];
+    }
+    UILongPressGestureRecognizer *gesture = [UILongPressGestureRecognizer new];
+    [gesture.rac_gestureSignal subscribeNext:^(UILongPressGestureRecognizer *gesture) {
+        if (gesture.state == UIGestureRecognizerStateBegan) {
+            NSError *error = nil;
+            NSDataDetector* detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:&error];
+            if (error) {
+                NSLog(@"dataDetectorWithTypes:error:%@", error);
+            }
+            NSMutableArray *activityItems = [NSMutableArray arrayWithObject:text];
+            [detector enumerateMatchesInString:text options:0 range:NSMakeRange(0, text.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+                [activityItems addObject:[NSURL URLWithString:[text substringWithRange:result.range]]];
+                *stop = YES;
+            }];
+            NSLog(@"activityItems: %@", activityItems);
+            UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:@[[TUSafariActivity new]]];
+            [self presentViewController:activityViewController animated:YES completion:^{
+                NSLog(@"present activityViewController completed.");
+            }];
+        }
+    }];
+    [cell addGestureRecognizer:gesture];
     return cell;
 }
 

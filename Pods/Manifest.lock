@@ -7,16 +7,19 @@ PODS:
   - ReactiveCocoa/no-arc (2.3.1)
   - ReactiveCocoa/UI (2.3.1):
     - ReactiveCocoa/Core
+  - TUSafariActivity (1.0.2)
   - ZeroPush (2.0.2)
 
 DEPENDENCIES:
   - Dropbox-Sync-API-SDK
   - ReactiveCocoa
+  - TUSafariActivity
   - ZeroPush
 
 SPEC CHECKSUMS:
   Dropbox-Sync-API-SDK: 503de85fc9397f2f8e30c70c71ed7707aa9d70c1
   ReactiveCocoa: dca75777b9d18990c8714a3a6f2149f29b4d1462
+  TUSafariActivity: 63c6b0584d1f0a731e955c0e4d9c89cde63bedc2
   ZeroPush: 49e1741405ecda1147d0fee9f19bc7f2bb339622
 
-COCOAPODS: 0.34.1
+COCOAPODS: 0.34.4
