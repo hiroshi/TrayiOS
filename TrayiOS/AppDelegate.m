@@ -63,7 +63,7 @@
 {
     [[ZeroPush shared] registerDeviceToken:deviceToken];
     NSString *tokenString = [ZeroPush deviceTokenFromData:deviceToken];
-    NSLog(@"%@", tokenString);
+    [[TrayModel sharedModel] addDeviceToken:tokenString];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error

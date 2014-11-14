@@ -106,6 +106,11 @@
     return [DBDatastoreManager sharedManager];
 }
 
+- (RACSignal *)signal
+{
+    return self.subject;
+}
+
 - (void)addText:(NSString *)text
 {
     DBTable *itemsTable = [self.defaultDatastore getTable:@"items"];
@@ -119,8 +124,8 @@
 
 - (NSArray *)items
 {
-    DBError *error = nil;
     DBTable *itemsTable = [self.defaultDatastore getTable:@"items"];
+    DBError *error = nil;
     NSArray *records = [itemsTable query:nil error:&error];
     if (error) {
         NSLog(@"query items failed: %@", error);
@@ -130,9 +135,27 @@
     }].array sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"orderDate" ascending:NO]]];
 }
 
-- (RACSignal *)signal
+- (void)addDeviceToken:(NSString *)deviceToken
 {
-    return self.subject;
+    DBTable *table = [self.defaultDatastore getTable:@"deviceTokens"];
+    DBError *error = nil;
+    BOOL inserted;
+    NSDate *now = [NSDate date];
+    NSDictionary *newFields = @{
+        @"createDate": now,
+    };
+    DBRecord *record = [table getOrInsertRecord:deviceToken fields:newFields inserted:&inserted error:&error];
+    if (error) {
+        NSLog(@"getOrInsertRecord deviceToken failed: %@", error);
+    }
+    NSDictionary *updateFields = @{
+        @"name": [[UIDevice currentDevice] name],
+        @"device": [[UIDevice currentDevice] model],
+        @"orderDate": now
+    };
+    [record update:updateFields];
+    [self.defaultDatastore sync:nil];
+    NSLog(@"deviceToken: %@ inserted: %hhd", deviceToken, inserted);
 }
 
 
