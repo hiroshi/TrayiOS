@@ -64,6 +64,7 @@
         NSLog(@"error: %@", error);
     } completed:^{
         NSLog(@"complete");
+        [context completeRequestReturningItems:@[] completionHandler:nil];
     }];
 }
 
