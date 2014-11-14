@@ -12,6 +12,7 @@ Create your Secrets.h
     
     #define DROPBOX_APP_KEY @"<Your Dropbox App Key>"
     #define DROPBOX_APP_SECRET @"<Your Dropbox App Secret"
+    #define ZEROPUSH_APP_TOKEN @"<Your Zeropush App Token>"
 
     #endif
 
